@@ -1,5 +1,7 @@
 # wallpaper_app
 
+it's only running on android device
+
 A new Flutter project.
 
 ## Getting Started
