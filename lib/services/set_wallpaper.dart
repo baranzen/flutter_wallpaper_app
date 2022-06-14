@@ -14,6 +14,7 @@ Future<void> setWallPaper(progressString, context, url) async {
       print("Task Done");
       var width = MediaQuery.of(context).size.width;
       var height = MediaQuery.of(context).size.height;
+      Navigator.of(context).pop();
       await Wallpaper.homeScreen(
           options: RequestSizeOptions.RESIZE_FIT, width: width, height: height);
     },
