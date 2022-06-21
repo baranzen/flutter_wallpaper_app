@@ -178,12 +178,4 @@ class _LikeButtonState extends State<LikeButton> {
       ),
     );
   }
-
-  favoriteUrl(url) {
-    widget.list2.add(url);
-
-    print('--------');
-    debugPrint(widget.list2.toString());
-    setState(() {});
-  }
 }
