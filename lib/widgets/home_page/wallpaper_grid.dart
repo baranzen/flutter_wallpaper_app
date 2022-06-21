@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_key_in_widget_constructors
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/model/wallpaper.dart';
 import 'package:wallpaper_app/pages/second_page.dart';
@@ -9,7 +8,8 @@ import 'package:wallpaper_app/services/wallpaper_api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class WallpaperGrid extends StatefulWidget {
-  const WallpaperGrid({Key? key}) : super(key: key);
+  final Function func;
+  WallpaperGrid({required this.func, Key? key}) : super(key: key);
 
   @override
   State<WallpaperGrid> createState() => _WallpaperGridState();
@@ -18,7 +18,7 @@ class WallpaperGrid extends StatefulWidget {
 class _WallpaperGridState extends State<WallpaperGrid> {
   late Future<List<Wallpaper>> _wallpaperGrid;
   Wallpaper wallpaper = Wallpaper();
-  List<String> likedList = [];
+
   @override
   void initState() {
     super.initState();
@@ -35,36 +35,57 @@ class _WallpaperGridState extends State<WallpaperGrid> {
           return GridView.builder(
             itemCount: listem.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
+              crossAxisCount: 2,
+            ),
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    image(listem, index, context),
-                    LikeButton(index, likedList: likedList, listem: listem),
-                  ],
-                ),
-              );
+              return gridItem(listem, index, context);
             },
           );
         } else if (snapshot.hasError) {
-          debugPrint('snapshot error');
-          return const Text('internete bağlanın!');
+          debugPrint('Error: ${snapshot.error}');
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'internete bağlanın!',
+                  style: TextStyle(fontSize: 24),
+                ),
+                TextButton(
+                  onPressed: () => setState(() {}),
+                  child: const Text('Tekrar Deneyin'),
+                ),
+              ],
+            ),
+          );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Colors.teal,
+            ),
           );
         }
       },
     );
   }
 
+  Padding gridItem(List<dynamic> listem, int index, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          image(listem, index, context),
+          LikeButton(index, list: listem, func: widget.func),
+        ],
+      ),
+    );
+  }
+
   InkWell image(List<dynamic> listem, int index, BuildContext context) {
     return InkWell(
       onTap: () {
-        print(listem[index].url);
+        /*   print(listem[index].url); */
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -76,11 +97,22 @@ class _WallpaperGridState extends State<WallpaperGrid> {
       },
       child: Hero(
         tag: listem[index].url,
-        child: CachedNetworkImage(
-          imageUrl: listem[index].url,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => const CircularProgressIndicator(),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(2.0),
+          child: CachedNetworkImage(
+            imageUrl: listem[index].url,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => const Center(
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: CircularProgressIndicator(
+                  strokeWidth: 3,
+                ),
+              ),
+            ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
         ),
       ),
     );
@@ -88,23 +120,36 @@ class _WallpaperGridState extends State<WallpaperGrid> {
 }
 
 class LikeButton extends StatefulWidget {
-  const LikeButton(
-    index, {
-    Key? key,
-    required this.likedList,
-    required List listem,
-  })  : _listem = listem,
-        super(key: key);
-
-  final List<String> likedList;
-  final List _listem;
-
+  LikeButton(this.index, {Key? key, required this.list, required this.func
+      /*   required List listem,
+  })  : _listem = listem, */
+      });
+  var index;
+  List list;
+  final List list2 = [];
+  final Function func;
   @override
   State<LikeButton> createState() => _LikeButtonState();
 }
 
 class _LikeButtonState extends State<LikeButton> {
-  var index;
+  Color likeButtonColor() {
+    if (sayac % 2 == 1) {
+      return Colors.grey;
+    } else {
+      return Colors.red;
+    }
+  }
+
+  late final List<String> likedList;
+  var sayac;
+  @override
+  void initState() {
+    // TODO: implement initState
+    likedList = [];
+    sayac = 1;
+    print('init');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +158,32 @@ class _LikeButtonState extends State<LikeButton> {
       child: Align(
         alignment: Alignment.bottomRight,
         child: IconButton(
-          icon: const Icon(Icons.favorite),
+          icon: Icon(
+            Icons.favorite,
+            color: likeButtonColor(),
+            shadows: const [
+              Shadow(
+                blurRadius: 10,
+                color: Colors.white,
+                offset: Offset(2, 2),
+              ),
+            ],
+          ),
           onPressed: () {
-            widget.likedList.add(widget._listem[index].url);
-            setState(() {});
-            print(widget.likedList);
+            likedList.add(widget.list[widget.index].url);
+            widget.func(likedList);
+            sayac++;
           },
         ),
       ),
     );
+  }
+
+  favoriteUrl(url) {
+    widget.list2.add(url);
+
+    print('--------');
+    debugPrint(widget.list2.toString());
+    setState(() {});
   }
 }

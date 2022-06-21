@@ -48,29 +48,33 @@ class Body extends StatelessWidget {
           ),
         ),
         const BackArrow(),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 50),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'duvarkağıdı ayarla',
-                  style: TextStyle(color: Colors.black, fontSize: 22),
-                ),
-              ),
-              onPressed: () {
-                /*  setWallPaper(progressString, context, url); */
-                _showActionSheet(context);
-              },
+        button(context),
+      ],
+    );
+  }
+
+  Padding button(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'duvarkağıdı ayarla',
+              style: TextStyle(color: Colors.black, fontSize: 22),
             ),
           ),
+          onPressed: () {
+            /*  setWallPaper(progressString, context, url); */
+            _showActionSheet(context);
+          },
         ),
-      ],
+      ),
     );
   }
 

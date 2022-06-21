@@ -13,9 +13,8 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(389, 822),
       builder: (context, child) => MaterialApp(
-        theme: ThemeData(
+        theme: ThemeData.dark().copyWith(
           primaryColor: Colors.teal,
-          primarySwatch: Colors.teal,
         ),
         debugShowCheckedModeBanner: false,
         home: const HomePage(),

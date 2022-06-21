@@ -14,11 +14,11 @@ class Wallpaper {
   String? url;
 
   factory Wallpaper.fromJson(Map<String, dynamic> json) => Wallpaper(
-        url: json["url"] == null ? null : json["url"],
+        url: json["url"],
       );
 
   Map<String, dynamic> toJson() => {
-        "url": url == null ? null : url,
+        "url": url,
       };
   @override
   String toString() {

@@ -15,29 +15,71 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //! wallpaper veriables
   Stream<String>? progressString;
   TabController? tabController;
+/*   //! keys
+
+  var keyFavoritePage = PageStorageKey('favoritePage');
+  //! pages
+  late List<Widget> myPages;
+  late Body page0;
+  late FavoritePage page1; */
+
+  int selectedItemIndex = 0;
+  List<String> likedList = [];
+/*   @override
+  void initState() {
+    page0 = Body(
+      progressString: progressString,
+      key: keyBodyPage,
+      func2: (likedList) {
+        setState(() {
+          likedList2 = likedList;
+        });
+      },
+    );
+    page1 = FavoritePage(key: keyFavoritePage, likedList: likedList2);
+    myPages = [page0, page1];
+
+    super.initState();
+  } */
+  var keyBodyPage = const PageStorageKey('bodyPage');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: const Text('wallpaper app'),
+      appBar: appBar(),
+      body: Body(
+        progressString: progressString,
+        key: keyBodyPage,
+        func2: (likedList) {
+          setState(() {
+            this.likedList = likedList;
+          });
+/*           print('selam $url'); */
+        },
       ),
-      body: Body(progressString: progressString),
-      bottomNavigationBar: const Bottom(),
+      /* Body(progressString: progressString), */
+      bottomNavigationBar: bottomNavigationBar(),
     );
   }
-}
 
-class Bottom extends StatelessWidget {
-  const Bottom({
-    Key? key,
-  }) : super(key: key);
+  AppBar appBar() {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      centerTitle: true,
+      title: const Text(
+        'Wallpaper App',
+        style: TextStyle(
+          color: Colors.teal,
+        ),
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
+  BottomNavigationBar bottomNavigationBar() {
     return BottomNavigationBar(
       currentIndex: 0,
       items: const [
@@ -56,17 +98,19 @@ class Bottom extends StatelessWidget {
       onTap: (index) {
         switch (index) {
           case 0:
-            Navigator.maybePop(context);
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomePage()));
             break;
           case 1:
             Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const FavoritePage(),
-              ),
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FavoritePage(likedList)));
             break;
         }
+        /*    setState(() {
+          selectedItemIndex = index;
+        }); */
       },
     );
   }

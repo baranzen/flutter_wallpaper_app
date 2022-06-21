@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:wallpaper_app/model/wallpaper.dart';
 
 class WallpaperApi {
@@ -12,7 +11,7 @@ class WallpaperApi {
     var result = await http.get(url);
 
     var wallList = jsonDecode(result.body);
-    debugPrint(wallList.toString());
+/*     debugPrint(wallList.toString()); */
 
     if (wallList is List) {
       list = wallList.map((e) => Wallpaper.fromJson(e)).toList();
