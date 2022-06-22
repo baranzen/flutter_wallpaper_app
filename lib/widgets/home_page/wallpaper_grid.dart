@@ -69,6 +69,8 @@ class _WallpaperGridState extends State<WallpaperGrid> {
     );
   }
 
+  List<String> likedList = [];
+
   Padding gridItem(List<dynamic> listem, int index, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -76,7 +78,15 @@ class _WallpaperGridState extends State<WallpaperGrid> {
         fit: StackFit.expand,
         children: [
           image(listem, index, context),
-          LikeButton(index, list: listem, func: widget.func),
+          LikeButton(index, list: listem, addToLikedList: (url, sayac) {
+            if (sayac % 2 == 1) {
+              likedList.add(url);
+            } else {
+              likedList.remove(url);
+            }
+            print(likedList);
+            widget.func(likedList);
+          }),
         ],
       ),
     );
@@ -85,7 +95,6 @@ class _WallpaperGridState extends State<WallpaperGrid> {
   InkWell image(List<dynamic> listem, int index, BuildContext context) {
     return InkWell(
       onTap: () {
-        /*   print(listem[index].url); */
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -120,27 +129,20 @@ class _WallpaperGridState extends State<WallpaperGrid> {
 }
 
 class LikeButton extends StatefulWidget {
-  LikeButton(this.index, {Key? key, required this.list, required this.func
+  LikeButton(this.index,
+      {Key? key, required this.list, required this.addToLikedList
       /*   required List listem,
   })  : _listem = listem, */
       });
   var index;
   List list;
   final List list2 = [];
-  final Function func;
+  final Function addToLikedList;
   @override
   State<LikeButton> createState() => _LikeButtonState();
 }
 
 class _LikeButtonState extends State<LikeButton> {
-  Color likeButtonColor() {
-    if (sayac % 2 == 1) {
-      return Colors.grey;
-    } else {
-      return Colors.red;
-    }
-  }
-
   late final List<String> likedList;
   var sayac;
   @override
@@ -170,12 +172,20 @@ class _LikeButtonState extends State<LikeButton> {
             ],
           ),
           onPressed: () {
-            likedList.add(widget.list[widget.index].url);
-            widget.func(likedList);
+            widget.addToLikedList(widget.list[widget.index].url, sayac);
             sayac++;
+            setState(() {});
           },
         ),
       ),
     );
+  }
+
+  Color likeButtonColor() {
+    if (sayac % 2 == 1) {
+      return Colors.grey;
+    } else {
+      return Colors.red;
+    }
   }
 }
