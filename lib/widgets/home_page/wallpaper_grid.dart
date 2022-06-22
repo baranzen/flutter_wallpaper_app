@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_key_in_widget_constructors
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print, use_key_in_widget_constructors, must_be_immutable, must_call_super
 
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class WallpaperGrid extends StatefulWidget {
   final Function func;
-  WallpaperGrid({required this.func, Key? key}) : super(key: key);
+  const WallpaperGrid({required this.func, Key? key}) : super(key: key);
 
   @override
   State<WallpaperGrid> createState() => _WallpaperGridState();
@@ -147,7 +147,6 @@ class _LikeButtonState extends State<LikeButton> {
   var sayac;
   @override
   void initState() {
-    // TODO: implement initState
     likedList = [];
     sayac = 1;
     print('init');
