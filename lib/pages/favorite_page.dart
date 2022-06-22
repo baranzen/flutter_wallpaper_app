@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/pages/home_page.dart';
 
 class FavoritePage extends StatefulWidget {
   FavoritePage(this.likedList, {Key? key}) : super(key: key);
@@ -28,6 +29,36 @@ class _FavoritePageState extends State<FavoritePage> {
           );
         },
       ),
+      bottomNavigationBar: bottomNavigationBar(),
+    );
+  }
+
+  BottomNavigationBar bottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: 0,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Anasayfa',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(
+            Icons.favorite,
+            color: Colors.red,
+          ),
+          label: 'Favoriler',
+        ),
+      ],
+      onTap: (index) {
+        if (index == 0) {
+          ; //!push yapınca ltekrar gelince listeler gözükmüyor
+          //!pop yap ki listeler tekrardan gözüksün
+          Navigator.pop(context);
+        }
+        /*    setState(() {
+          selectedItemIndex = index;
+        }); */
+      },
     );
   }
 }

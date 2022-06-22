@@ -97,10 +97,6 @@ class _HomePageState extends State<HomePage> {
       ],
       onTap: (index) {
         switch (index) {
-          case 0:
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomePage()));
-            break;
           case 1:
             Navigator.push(
                 context,
