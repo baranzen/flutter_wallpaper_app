@@ -1,17 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/widgets/home_page/wallpaper_grid.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key, required this.progressString, required this.func2})
       : super(key: key);
 
   final Stream<String>? progressString;
   final Function func2;
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  var crossCount = 2;
+
   @override
   Widget build(BuildContext context) {
-    return WallpaperGrid(func: (likedList) {
-      func2(likedList);
-    });
+    return Column(
+      children: [
+        IconButton(
+            onPressed: () {
+              if (crossCount == 3) {
+                crossCount = 0;
+              }
+              setState(() {
+                crossCount++;
+              });
+            },
+            icon: const Icon(
+              Icons.ads_click,
+            )),
+        Expanded(
+          child: WallpaperGrid(crossCount, func: (likedList) {
+            widget.func2(likedList);
+          }),
+        ),
+      ],
+    );
 
     /* Center(
       child: TextButton(

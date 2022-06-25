@@ -60,13 +60,15 @@ class Body extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: TextButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            backgroundColor: MaterialStateProperty.all<Color>(
+              const Color.fromARGB(218, 0, 0, 0),
+            ),
           ),
           child: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'duvarkağıdı ayarla',
-              style: TextStyle(color: Colors.black, fontSize: 22),
+              'Duvarkağıdı Ayarla',
+              style: TextStyle(color: Colors.white, fontSize: 22),
             ),
           ),
           onPressed: () {

@@ -9,8 +9,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class WallpaperGrid extends StatefulWidget {
   final Function func;
-  const WallpaperGrid({required this.func, Key? key}) : super(key: key);
-
+  WallpaperGrid(this.crossCount, {required this.func, Key? key})
+      : super(key: key);
+  var crossCount;
   @override
   State<WallpaperGrid> createState() => _WallpaperGridState();
 }
@@ -27,6 +28,7 @@ class _WallpaperGridState extends State<WallpaperGrid> {
 
   @override
   Widget build(BuildContext context) {
+    print('listem $likedList');
     return FutureBuilder<List<Wallpaper>>(
       future: _wallpaperGrid,
       builder: (context, snapshot) {
@@ -34,8 +36,8 @@ class _WallpaperGridState extends State<WallpaperGrid> {
           List listem = snapshot.data!;
           return GridView.builder(
             itemCount: listem.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: widget.crossCount,
             ),
             itemBuilder: (context, index) {
               return gridItem(listem, index, context);
