@@ -1,10 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/pages/favorite_page.dart';
-
 import '../widgets/home_page/body.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,32 +16,10 @@ class _HomePageState extends State<HomePage> {
   //! wallpaper veriables
   Stream<String>? progressString;
   TabController? tabController;
-/*   //! keys
-
-  var keyFavoritePage = PageStorageKey('favoritePage');
-  //! pages
-  late List<Widget> myPages;
-  late Body page0;
-  late FavoritePage page1; */
 
   int selectedItemIndex = 0;
   List<String> likedList = [];
-/*   @override
-  void initState() {
-    page0 = Body(
-      progressString: progressString,
-      key: keyBodyPage,
-      func2: (likedList) {
-        setState(() {
-          likedList2 = likedList;
-        });
-      },
-    );
-    page1 = FavoritePage(key: keyFavoritePage, likedList: likedList2);
-    myPages = [page0, page1];
 
-    super.initState();
-  } */
   var keyBodyPage = const PageStorageKey('bodyPage');
   @override
   Widget build(BuildContext context) {
@@ -56,10 +32,8 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             this.likedList = likedList;
           });
-/*           print('selam $url'); */
         },
       ),
-      /* Body(progressString: progressString), */
       bottomNavigationBar: bottomNavigationBar(),
     );
   }
@@ -104,9 +78,6 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => FavoritePage(likedList)));
             break;
         }
-        /*    setState(() {
-          selectedItemIndex = index;
-        }); */
       },
     );
   }

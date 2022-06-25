@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData.dark().copyWith(
           primaryColor: Colors.teal,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: const HomePage(),
       ),

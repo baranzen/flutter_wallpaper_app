@@ -19,18 +19,22 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IconButton(
-            onPressed: () {
-              if (crossCount == 3) {
-                crossCount = 0;
-              }
-              setState(() {
-                crossCount++;
-              });
-            },
-            icon: const Icon(
-              Icons.ads_click,
-            )),
+        Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+              onPressed: () {
+                if (crossCount == 3) {
+                  crossCount = 0;
+                }
+                setState(() {
+                  crossCount++;
+                });
+              },
+              icon: const Icon(
+                Icons.view_comfy_rounded,
+                color: Colors.white,
+              )),
+        ),
         Expanded(
           child: WallpaperGrid(crossCount, func: (likedList) {
             widget.func2(likedList);

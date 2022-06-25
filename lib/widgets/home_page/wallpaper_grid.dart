@@ -6,6 +6,7 @@ import 'package:wallpaper_app/model/wallpaper.dart';
 import 'package:wallpaper_app/pages/second_page.dart';
 import 'package:wallpaper_app/services/wallpaper_api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class WallpaperGrid extends StatefulWidget {
   final Function func;
@@ -34,11 +35,11 @@ class _WallpaperGridState extends State<WallpaperGrid> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List listem = snapshot.data!;
-          return GridView.builder(
-            itemCount: listem.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          return MasonryGridView.builder(
+            gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: widget.crossCount,
             ),
+            itemCount: listem.length,
             itemBuilder: (context, index) {
               return gridItem(listem, index, context);
             },
@@ -77,7 +78,6 @@ class _WallpaperGridState extends State<WallpaperGrid> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
-        fit: StackFit.expand,
         children: [
           image(listem, index, context),
           LikeButton(index, list: listem, addToLikedList: (url, sayac) {
