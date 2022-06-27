@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wallpaper_app/widgets/home_page/wallpaper_grid.dart';
 
 class Body extends StatefulWidget {
-  const Body({Key? key, required this.progressString, required this.func2})
+  Body({Key? key, required this.progressString, required this.func2})
       : super(key: key);
 
   final Stream<String>? progressString;
@@ -32,7 +32,6 @@ class _BodyState extends State<Body> {
               },
               icon: const Icon(
                 Icons.view_comfy_rounded,
-                color: Colors.white,
               )),
         ),
         Expanded(
@@ -42,17 +41,5 @@ class _BodyState extends State<Body> {
         ),
       ],
     );
-
-    /* Center(
-      child: TextButton(
-        child: const Text(
-          'wallpaper',
-          style: TextStyle(fontSize: 65),
-        ),
-        onPressed: () async {
-          await setWallPaper(progressString, context);
-        },
-      ),
-    ); */
   }
 }

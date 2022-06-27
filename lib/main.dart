@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(389, 822),
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark().copyWith(
+        theme: ThemeData.light().copyWith(
           primaryColor: Colors.teal,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),

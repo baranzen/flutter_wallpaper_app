@@ -109,7 +109,7 @@ class _WallpaperGridState extends State<WallpaperGrid> {
       child: Hero(
         tag: listem[index].url,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(2.0),
+          borderRadius: BorderRadius.circular(5.0),
           child: CachedNetworkImage(
             imageUrl: listem[index].url,
             fit: BoxFit.cover,
@@ -132,10 +132,8 @@ class _WallpaperGridState extends State<WallpaperGrid> {
 
 class LikeButton extends StatefulWidget {
   LikeButton(this.index,
-      {Key? key, required this.list, required this.addToLikedList
-      /*   required List listem,
-  })  : _listem = listem, */
-      });
+      {Key? key, required this.list, required this.addToLikedList});
+
   var index;
   List list;
   final List list2 = [];
@@ -154,6 +152,7 @@ class _LikeButtonState extends State<LikeButton> {
     print('init');
   }
 
+  var color = Colors.grey;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -173,8 +172,10 @@ class _LikeButtonState extends State<LikeButton> {
             ],
           ),
           onPressed: () {
+            /*       likeButtonColor(); */ //!!
             widget.addToLikedList(widget.list[widget.index].url, sayac);
             sayac++;
+            likeButtonColor(); //yes
             setState(() {});
           },
         ),
@@ -182,11 +183,11 @@ class _LikeButtonState extends State<LikeButton> {
     );
   }
 
-  Color likeButtonColor() {
+  likeButtonColor() {
     if (sayac % 2 == 1) {
-      return Colors.grey;
+      return color = Colors.grey;
     } else {
-      return Colors.red;
+      return color = Colors.red;
     }
   }
 }

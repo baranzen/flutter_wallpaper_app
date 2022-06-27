@@ -52,7 +52,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   ClipRRect image(int index) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(2.0),
+      borderRadius: BorderRadius.circular(5.0),
       child: CachedNetworkImage(
         imageUrl: widget.likedList[index],
         fit: BoxFit.cover,
