@@ -24,8 +24,9 @@ class _FavoritePageState extends State<FavoritePage> {
                 children: [
                   const Text('Favoriler Listeniz Boş!'),
                   TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Anasayfaya Dönün'))
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Anasayfaya Dönün'),
+                  ),
                 ],
               ),
             )
