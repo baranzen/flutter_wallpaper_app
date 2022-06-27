@@ -7,12 +7,15 @@ import 'package:wallpaper_app/pages/second_page.dart';
 import 'package:wallpaper_app/services/wallpaper_api.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:wallpaper_app/widgets/home_page/like_button.dart';
 
 class WallpaperGrid extends StatefulWidget {
   final Function func;
+  var crossCount;
+
   WallpaperGrid(this.crossCount, {required this.func, Key? key})
       : super(key: key);
-  var crossCount;
+
   @override
   State<WallpaperGrid> createState() => _WallpaperGridState();
 }
@@ -127,67 +130,5 @@ class _WallpaperGridState extends State<WallpaperGrid> {
         ),
       ),
     );
-  }
-}
-
-class LikeButton extends StatefulWidget {
-  LikeButton(this.index,
-      {Key? key, required this.list, required this.addToLikedList});
-
-  var index;
-  List list;
-  final List list2 = [];
-  final Function addToLikedList;
-  @override
-  State<LikeButton> createState() => _LikeButtonState();
-}
-
-class _LikeButtonState extends State<LikeButton> {
-  late final List<String> likedList;
-  var sayac;
-  @override
-  void initState() {
-    likedList = [];
-    sayac = 1;
-    print('init');
-  }
-
-  var color = Colors.grey;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: IconButton(
-          icon: Icon(
-            Icons.favorite,
-            color: likeButtonColor(),
-            shadows: const [
-              Shadow(
-                blurRadius: 10,
-                color: Colors.white,
-                offset: Offset(2, 2),
-              ),
-            ],
-          ),
-          onPressed: () {
-            /*       likeButtonColor(); */ //!!
-            widget.addToLikedList(widget.list[widget.index].url, sayac);
-            sayac++;
-            likeButtonColor(); //yes
-            setState(() {});
-          },
-        ),
-      ),
-    );
-  }
-
-  likeButtonColor() {
-    if (sayac % 2 == 1) {
-      return color = Colors.grey;
-    } else {
-      return color = Colors.red;
-    }
   }
 }
