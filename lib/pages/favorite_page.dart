@@ -17,35 +17,40 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: MasonryGridView.builder(
-        itemCount: widget.likedList.length,
-        gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2),
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Stack(
-              children: [
-                image(index),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        widget.likedList.remove(widget.likedList[index]);
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                    ),
+      body: widget.likedList.isEmpty
+          ? const Center(
+              child: Text('Favoriler Listeniz Boş!'),
+            )
+          : MasonryGridView.builder(
+              itemCount: widget.likedList.length,
+              gridDelegate:
+                  const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Stack(
+                    children: [
+                      image(index),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              widget.likedList.remove(widget.likedList[index]);
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          );
-        },
-      ),
       bottomNavigationBar: bottomNavigationBar(context),
     );
   }

@@ -22,17 +22,18 @@ class _BodyState extends State<Body> {
         Align(
           alignment: Alignment.centerRight,
           child: IconButton(
-              onPressed: () {
-                if (crossCount == 3) {
-                  crossCount = 0;
-                }
-                setState(() {
-                  crossCount++;
-                });
-              },
-              icon: const Icon(
-                Icons.view_comfy_rounded,
-              )),
+            onPressed: () {
+              if (crossCount == 3) {
+                crossCount = 0;
+              }
+              setState(() {
+                crossCount++;
+              });
+            },
+            icon: const Icon(
+              Icons.view_comfy_rounded,
+            ),
+          ),
         ),
         Expanded(
           child: WallpaperGrid(crossCount, func: (likedList) {
