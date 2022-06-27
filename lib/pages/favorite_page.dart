@@ -92,7 +92,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   BottomNavigationBar bottomNavigationBar(context) {
     return BottomNavigationBar(
-      currentIndex: 0,
+      currentIndex: 1,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),

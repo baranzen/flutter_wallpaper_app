@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Anasayfa',
+          backgroundColor: Colors.green,
         ),
         BottomNavigationBarItem(
           icon: Icon(
