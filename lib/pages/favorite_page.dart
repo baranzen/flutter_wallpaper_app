@@ -18,8 +18,16 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       appBar: appBar(),
       body: widget.likedList.isEmpty
-          ? const Center(
-              child: Text('Favoriler Listeniz Boş!'),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Favoriler Listeniz Boş!'),
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text('Anasayfaya Dönün'))
+                ],
+              ),
             )
           : MasonryGridView.builder(
               itemCount: widget.likedList.length,
