@@ -14,24 +14,39 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   var crossCount = 2;
-
+  var value = 2;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: IconButton(
-            onPressed: () {
-              if (crossCount == 3) {
-                crossCount = 0;
-              }
-              setState(() {
-                crossCount++;
-              });
-            },
-            icon: const Icon(
-              Icons.view_comfy_rounded,
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: DropdownButton(
+              onChanged: (value2) {
+                setState(() {
+                  value = value2 as int;
+                  crossCount = value2;
+                });
+              },
+              value: value,
+              items: const [
+                DropdownMenuItem(
+                  value: 1,
+                  child: Icon(
+                    Icons.view_agenda,
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 2,
+                  child: Icon(Icons.view_cozy_outlined),
+                ),
+                DropdownMenuItem(
+                  value: 3,
+                  child: Icon(Icons.view_column),
+                ),
+              ],
             ),
           ),
         ),
