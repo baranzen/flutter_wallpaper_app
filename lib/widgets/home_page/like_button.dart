@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, must_call_super, avoid_print
+
 import 'package:flutter/material.dart';
 
 class LikeButton extends StatefulWidget {
@@ -19,7 +21,6 @@ class _LikeButtonState extends State<LikeButton> {
   void initState() {
     likedList = [];
     sayac = 1;
-    print('init');
   }
 
   var color = Colors.grey;

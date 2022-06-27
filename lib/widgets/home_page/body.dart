@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wallpaper_app/widgets/home_page/wallpaper_grid.dart';
 
 class Body extends StatefulWidget {
-  Body({Key? key, required this.progressString, required this.func2})
+  const Body({Key? key, required this.progressString, required this.func2})
       : super(key: key);
 
   final Stream<String>? progressString;

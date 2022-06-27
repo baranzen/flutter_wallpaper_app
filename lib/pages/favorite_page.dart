@@ -22,10 +22,10 @@ class _FavoritePageState extends State<FavoritePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Favoriler Listeniz Boş!'),
+                  const Text('Favoriler Listeniz Boş!'),
                   TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Text('Anasayfaya Dönün'))
+                      child: const Text('Anasayfaya Dönün'))
                 ],
               ),
             )
