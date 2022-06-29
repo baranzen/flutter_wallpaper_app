@@ -1,4 +1,4 @@
-import 'package:anim_search_bar/anim_search_bar.dart';
+import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/widgets/home_page/wallpaper_grid.dart';
 
@@ -95,14 +95,19 @@ class _BodyState extends State<Body> {
               ),
             ),
           ),
-          AnimSearchBar(
-            width: MediaQuery.of(context).size.width,
-            textController: textController,
-            helpText: 'marka, kategori veya link',
-            onSuffixTap: () {
-              setState(() {
-                textController.clear();
-              });
+          SearchBarAnimation(
+            textEditingController: TextEditingController(),
+            isOriginalAnimation: false,
+            buttonBorderColour: Colors.black45,
+            trailingIcon: Icons.search,
+            buttonIcon: Icons.search,
+            onFieldSubmitted: (String value) {
+              debugPrint('onFieldSubmitted value $value');
+            },
+            hintText: 'Kategori, marka model veya link',
+            durationInMilliSeconds: 500,
+            onChanged: (value) {
+              print(value);
             },
           ),
         ],
