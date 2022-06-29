@@ -39,6 +39,7 @@ class _WallpaperGridState extends State<WallpaperGrid> {
         if (snapshot.hasData) {
           List listem = snapshot.data!;
           return MasonryGridView.builder(
+            padding: const EdgeInsets.all(0),
             gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: widget.crossCount,
             ),
