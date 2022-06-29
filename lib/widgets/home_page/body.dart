@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/widgets/home_page/wallpaper_grid.dart';
@@ -58,60 +60,96 @@ class _BodyState extends State<Body> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          const Text(
-            'Wallpaper App',
-            style: TextStyle(color: Colors.teal, fontSize: 17),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: DropdownButton(
-                focusColor: Colors.teal,
-                iconEnabledColor: Colors.teal,
-                onChanged: (value2) {
-                  setState(() {
-                    value = value2 as int;
-                    crossCount = value2;
-                  });
-                },
-                value: value,
-                items: const [
-                  DropdownMenuItem(
-                    value: 1,
-                    child: Icon(
-                      Icons.view_agenda,
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    value: 2,
-                    child: Icon(Icons.view_cozy_outlined),
-                  ),
-                  DropdownMenuItem(
-                    value: 3,
-                    child: Icon(Icons.view_column),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SearchBarAnimation(
-            textEditingController: TextEditingController(),
-            isOriginalAnimation: false,
-            buttonBorderColour: Colors.black45,
-            trailingIcon: Icons.search,
-            buttonIcon: Icons.search,
-            onFieldSubmitted: (String value) {
-              debugPrint('onFieldSubmitted value $value');
-            },
-            hintText: 'Kategori, marka model veya link',
-            durationInMilliSeconds: 500,
-            onChanged: (value) {
-              print(value);
-            },
-          ),
+          const WallpaperAppText(),
+          dropDown(),
+          SearchBar(),
         ],
       ),
+    );
+  }
+
+  Align dropDown() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: DropdownButton(
+          focusColor: Colors.teal,
+          iconEnabledColor: Colors.teal,
+          onChanged: (value2) {
+            setState(() {
+              value = value2 as int;
+              crossCount = value2;
+            });
+          },
+          value: value,
+          items: const [
+            DropdownMenuItem(
+              value: 1,
+              child: Icon(
+                Icons.view_agenda,
+              ),
+            ),
+            DropdownMenuItem(
+              value: 2,
+              child: Icon(Icons.view_cozy_outlined),
+            ),
+            DropdownMenuItem(
+              value: 3,
+              child: Icon(Icons.view_column),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SearchBar extends StatefulWidget {
+  SearchBar({
+    Key? key,
+  }) : super(key: key);
+  var onChanged = '';
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  var textEditing = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return SearchBarAnimation(
+      textEditingController: textEditing,
+      isOriginalAnimation: false,
+      buttonBorderColour: Colors.black45,
+      trailingIcon: Icons.search,
+      buttonIcon: Icons.search,
+      onFieldSubmitted: (String value) {
+        debugPrint('onFieldSubmitted value $value');
+      },
+      hintText: 'Kategori, marka model veya link',
+      onCollapseComplete: () {
+        textEditing.clear();
+      },
+      durationInMilliSeconds: 500,
+      onChanged: (value) {
+        widget.onChanged = value;
+        print(value);
+      },
+    );
+  }
+}
+
+class WallpaperAppText extends StatelessWidget {
+  const WallpaperAppText({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Wallpaper App',
+      style: TextStyle(color: Colors.teal, fontSize: 17),
     );
   }
 }
