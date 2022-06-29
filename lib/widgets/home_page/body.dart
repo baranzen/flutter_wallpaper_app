@@ -26,6 +26,12 @@ class _BodyState extends State<Body> {
     'Cars',
     'Nature',
     'Space',
+    'Cars',
+    'Nature',
+    'Space',
+    'Cars',
+    'Nature',
+    'Space',
   ];
   @override
   Widget build(BuildContext context) {
@@ -121,9 +127,11 @@ class _SearchBarState extends State<SearchBar> {
     return SearchBarAnimation(
       textEditingController: textEditing,
       isOriginalAnimation: false,
-      buttonBorderColour: Colors.black45,
+      buttonBorderColour: Colors.teal,
       trailingIcon: Icons.search,
       buttonIcon: Icons.search,
+      buttonIconColour: Colors.teal,
+      trailingIconColour: Colors.teal,
       onFieldSubmitted: (String value) {
         debugPrint('onFieldSubmitted value $value');
       },
