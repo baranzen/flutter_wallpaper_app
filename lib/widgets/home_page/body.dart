@@ -1,64 +1,69 @@
 import 'dart:async';
 
-import 'package:searchbar_animation/searchbar_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app/model/wallpaper.dart';
+import 'package:wallpaper_app/widgets/home_page/search_bar.dart';
 import 'package:wallpaper_app/widgets/home_page/wallpaper_grid.dart';
+import '../../services/wallpaper_api.dart';
 
 class Body extends StatefulWidget {
-  const Body({Key? key, required this.progressString, required this.func2})
-      : super(key: key);
-
-  final Stream<String>? progressString;
-  final Function func2;
+  var func2;
+  Body({Key? key, this.func2}) : super(key: key);
 
   @override
-  State<Body> createState() => _BodyState();
+  BodyState createState() => BodyState();
 }
 
-class _BodyState extends State<Body> {
-  var crossCount = 2;
-  var textController = TextEditingController();
+class BodyState extends State<Body> {
+  List<Wallpaper> wallpapers = [];
+  String query = '';
+  Timer? debouncer;
   var value = 2;
-  var chips = [
-    'Cars',
-    'Nature',
-    'Space',
-    'Cars',
-    'Nature',
-    'Space',
-    'Cars',
-    'Nature',
-    'Space',
-    'Cars',
-    'Nature',
-    'Space',
-  ];
+  var cross = 2;
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        top(context),
-        SizedBox(
-          height: 40,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: chips
-                .map(
-                  (e) => Row(
-                    children: [
-                      Chip(
-                        label: Text(e),
-                      ),
-                      const SizedBox(width: 5),
-                    ],
-                  ),
-                )
-                .toList(),
-          ),
+  void initState() {
+    super.initState();
+
+    init();
+  }
+
+  Future init() async {
+    final wallpapers = await WallpaperApi.getWallpaperData(query);
+
+    setState(() => this.wallpapers = wallpapers);
+  }
+
+  @override
+  void dispose() {
+    debouncer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        body: Column(
+          children: <Widget>[
+            top(context),
+            WallpaperGrid(
+              cross,
+              wallpapers,
+              context,
+              func: (likedList) {
+                widget.func2(likedList);
+              },
+            )
+          ],
         ),
-        MainBody(crossCount: crossCount, widget: widget),
-      ],
-    );
+      );
+  void debounce(
+    VoidCallback callback, {
+    Duration duration = const Duration(milliseconds: 10),
+  }) {
+    if (debouncer != null) {
+      debouncer!.cancel();
+    }
+
+    debouncer = Timer(duration, callback);
   }
 
   SafeArea top(BuildContext context) {
@@ -68,11 +73,28 @@ class _BodyState extends State<Body> {
         children: [
           const WallpaperAppText(),
           dropDown(),
-          SearchBar(),
+          buildSearch(),
         ],
       ),
     );
   }
+
+  Widget buildSearch() => SearchBar(
+        text: query,
+        hintText: 'marka, model veya link',
+        onChanged: searchWallpaper,
+      );
+
+  Future searchWallpaper(String query) async => debounce(() async {
+        final wallpapers = await WallpaperApi.getWallpaperData(query);
+
+        if (!mounted) return;
+
+        setState(() {
+          this.query = query;
+          this.wallpapers = wallpapers;
+        });
+      });
 
   Align dropDown() {
     return Align(
@@ -85,7 +107,7 @@ class _BodyState extends State<Body> {
           onChanged: (value2) {
             setState(() {
               value = value2 as int;
-              crossCount = value2;
+              cross = value;
             });
           },
           value: value,
@@ -111,43 +133,6 @@ class _BodyState extends State<Body> {
   }
 }
 
-class SearchBar extends StatefulWidget {
-  SearchBar({
-    Key? key,
-  }) : super(key: key);
-  var onChanged = '';
-  @override
-  State<SearchBar> createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
-  var textEditing = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return SearchBarAnimation(
-      textEditingController: textEditing,
-      isOriginalAnimation: false,
-      buttonBorderColour: Colors.teal,
-      trailingIcon: Icons.search,
-      buttonIcon: Icons.search,
-      buttonIconColour: Colors.teal,
-      trailingIconColour: Colors.teal,
-      onFieldSubmitted: (String value) {
-        debugPrint('onFieldSubmitted value $value');
-      },
-      hintText: 'Kategori, marka model veya link',
-      onCollapseComplete: () {
-        textEditing.clear();
-      },
-      durationInMilliSeconds: 500,
-      onChanged: (value) {
-        widget.onChanged = value;
-        print(value);
-      },
-    );
-  }
-}
-
 class WallpaperAppText extends StatelessWidget {
   const WallpaperAppText({
     Key? key,
@@ -158,26 +143,6 @@ class WallpaperAppText extends StatelessWidget {
     return const Text(
       'Wallpaper App',
       style: TextStyle(color: Colors.teal, fontSize: 17),
-    );
-  }
-}
-
-class MainBody extends StatelessWidget {
-  const MainBody({
-    Key? key,
-    required this.crossCount,
-    required this.widget,
-  }) : super(key: key);
-
-  final int crossCount;
-  final Body widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: WallpaperGrid(crossCount, func: (likedList) {
-        widget.func2(likedList);
-      }),
     );
   }
 }

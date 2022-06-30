@@ -6,18 +6,19 @@ import 'package:wallpaper_app/model/wallpaper.dart';
 
 class WallpaperApi {
   static var url = Uri.parse('https://baranben.com/wallpaper_api.json');
-  static Future<List<Wallpaper>> getWallpaperData() async {
-    List<Wallpaper> list = [];
+  static Future<List<Wallpaper>> getWallpaperData(query) async {
     var result = await http.get(url);
-
-    var wallList = jsonDecode(result.body);
-/*     debugPrint(wallList.toString()); */
-
-    if (wallList is List) {
-      list = wallList.map((e) => Wallpaper.fromJson(e)).toList();
+    if (result.statusCode == 200) {
+      final List wallpapers = json.decode(result.body);
+      return wallpapers
+          .map((json) => Wallpaper.fromJson(json))
+          .where((wallpapers) {
+        final brandLower = wallpapers.brand?.toLowerCase();
+        final searchLower = query.toLowerCase();
+        return brandLower!.contains(searchLower);
+      }).toList();
     } else {
-      return [];
+      throw Exception();
     }
-    return list;
   }
 }

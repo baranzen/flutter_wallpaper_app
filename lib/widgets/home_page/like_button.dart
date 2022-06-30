@@ -15,15 +15,13 @@ class LikeButton extends StatefulWidget {
 }
 
 class _LikeButtonState extends State<LikeButton> {
-  late final List<String> likedList;
   var sayac;
   @override
   void initState() {
-    likedList = [];
     sayac = 1;
   }
 
-  var color = Colors.grey;
+  var color = const Color.fromARGB(198, 158, 158, 158);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -36,11 +34,12 @@ class _LikeButtonState extends State<LikeButton> {
             color: likeButtonColor(),
             shadows: const [
               Shadow(
-                blurRadius: 10,
-                color: Colors.white,
+                blurRadius: 2,
+                color: Colors.grey,
                 offset: Offset(2, 2),
               ),
             ],
+            size: 30,
           ),
           onPressed: () {
             /*       likeButtonColor(); */ //!!
@@ -56,7 +55,7 @@ class _LikeButtonState extends State<LikeButton> {
 
   likeButtonColor() {
     if (sayac % 2 == 1) {
-      return color = Colors.grey;
+      return color = const Color.fromARGB(198, 158, 158, 158);
     } else {
       return color = Colors.red;
     }

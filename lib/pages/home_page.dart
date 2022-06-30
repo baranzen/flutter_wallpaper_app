@@ -26,8 +26,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Body(
-        progressString: progressString,
-        key: keyBodyPage,
         func2: (likedList) {
           setState(() {
             this.likedList = likedList;
