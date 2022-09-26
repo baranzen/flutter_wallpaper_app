@@ -1,21 +1,37 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, unused_element
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallpaper_app/services/set_wallpaper.dart';
+import 'package:wallpaper_app/widgets/second_page/bottom_sheet_widget.dart';
+import 'package:wallpaper_app/widgets/second_page/like_button.dart';
 
 // ignore: must_be_immutable
-class SecondPage extends StatelessWidget {
-  SecondPage({required this.url, Key? key}) : super(key: key);
-
+class SecondPage extends StatefulWidget {
+  SecondPage({required this.url, Key? key, this.adToLikedListFromLikedButton})
+      : super(key: key);
+  final adToLikedListFromLikedButton;
   var url;
+
+  @override
+  State<SecondPage> createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
   Stream<String>? progressString;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(url: url, progressString: progressString),
+      body: Body(
+        url: widget.url,
+        progressString: progressString,
+        adToLikedListFromLikedButton: (imageUrl) {
+          widget.adToLikedListFromLikedButton(imageUrl);
+        },
+      ),
     );
   }
 }
@@ -25,8 +41,9 @@ class Body extends StatelessWidget {
     Key? key,
     required this.url,
     required this.progressString,
+    this.adToLikedListFromLikedButton,
   }) : super(key: key);
-
+  final adToLikedListFromLikedButton;
   final url;
   final Stream<String>? progressString;
 
@@ -34,19 +51,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Hero(
-            tag: url,
-            child: CachedNetworkImage(
-              imageUrl: url,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ),
-        ),
+        Image(url: url),
         const BackArrow(),
         button(context),
       ],
@@ -61,22 +66,39 @@ class Body extends StatelessWidget {
         child: TextButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-              const Color.fromARGB(218, 0, 0, 0),
+              const Color.fromARGB(218, 41, 214, 162).withOpacity(0.5),
             ),
           ),
           child: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'Duvarkağıdı Ayarla',
+              'Set Wallpaper',
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),
           ),
           onPressed: () {
-            /*  setWallPaper(progressString, context, url); */
-            _showActionSheet(context);
+            bottomSheet(context);
+            /* _showActionSheet(context); */
           },
         ),
       ),
+    );
+  }
+
+  Future<void> bottomSheet(BuildContext context) {
+    return showModalBottomSheet<void>(
+      backgroundColor: Colors.white.withOpacity(0.9),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return BottomSheetWidget(
+          progressString: progressString,
+          url: url,
+          adToLikedListFromLikedButton: adToLikedListFromLikedButton,
+        );
+      },
     );
   }
 
@@ -84,35 +106,62 @@ class Body extends StatelessWidget {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
-        title: const Text('Duvar kadığını hangi ekrana ayarlamak istersin'),
+        title: const Text('Which screen would you like to set as wallpaper?'),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
             isDefaultAction: true,
             onPressed: () {
-              setWallPaper(progressString, context, url);
+              setWallPaper(progressString, context, url, 1);
             },
-            child: const Text('Ana Ekran'),
+            child: const Text('Home Screen'),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pop(context);
+              setWallPaper(progressString, context, url, 2);
             },
-            child: const Text('Kilit Ekranı'),
+            child: const Text('Lock Screen'),
           ),
           CupertinoActionSheetAction(
             onPressed: () {
-              Navigator.pop(context);
+              setWallPaper(progressString, context, url, 3);
             },
-            child: const Text('Her ikisi'),
+            child: const Text('Both'),
           ),
           CupertinoActionSheetAction(
             isDestructiveAction: true,
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Kapat'),
+            child: const Text('Exit'),
           )
         ],
+      ),
+    );
+  }
+}
+
+class Image extends StatelessWidget {
+  const Image({
+    Key? key,
+    required this.url,
+  }) : super(key: key);
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: CachedNetworkImage(
+        imageUrl: url,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => const Center(
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+          ),
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
   }
@@ -131,9 +180,24 @@ class BackArrow extends StatelessWidget {
         child: Align(
           alignment: Alignment.topLeft,
           child: IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_ios,
               color: Colors.white,
+              size: 31.h,
+              shadows: [
+                BoxShadow(
+                  color: Colors.teal.withOpacity(1),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: const Offset(0, 1), // changes position of shadow
+                ),
+                BoxShadow(
+                  color: Colors.teal.withOpacity(1),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: const Offset(0, 1), // changes position of shadow
+                ),
+              ],
             ),
             onPressed: () => Navigator.pop(context),
           ),

@@ -1,27 +1,27 @@
-// ignore_for_file: library_private_types_in_public_api
-
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:wallpaper_app/pages/favorite_page.dart';
-import '../widgets/home_page/body.dart';
+import 'package:wallpaper_app/pages/liked_page.dart';
+import 'package:wallpaper_app/services/interstitialad.dart';
+import 'package:wallpaper_app/widgets/home_page/body.dart';
+import 'package:wallpaper_app/widgets/home_page/snackbar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  //! wallpaper veriables
-  Stream<String>? progressString;
-
-  int selectedItemIndex = 0;
   List<String> likedList = [];
-  var textController = TextEditingController();
-  var keyBodyPage = const PageStorageKey('bodyPage');
-  var crossCount = 2;
-  var value = 2;
+  late InterstitialAds interstitialAd;
+  @override
+  void initState() {
+    // ignore: todo
+    // TODO: implement initState
+    interstitialAd = InterstitialAds();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +32,17 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
-      bottomNavigationBar: bottomNavigationBar(),
+      bottomNavigationBar: bottomNavigationBar(context),
     );
   }
 
-  BottomNavigationBar bottomNavigationBar() {
+  BottomNavigationBar bottomNavigationBar(context) {
     return BottomNavigationBar(
       currentIndex: 0,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Anasayfa',
+          label: 'Home',
           backgroundColor: Colors.green,
         ),
         BottomNavigationBarItem(
@@ -50,17 +50,21 @@ class _HomePageState extends State<HomePage> {
             Icons.favorite,
             color: Colors.red,
           ),
-          label: 'Favoriler',
+          label: 'Liked',
         ),
       ],
       onTap: (index) {
-        switch (index) {
-          case 1:
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => FavoritePage(likedList)));
-            break;
+        if (index == 1) {
+          interstitialAd.loadInterstitialAd();
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LikedPage(likedList),
+            ),
+          );
+          showSnackBarMessage('To Delete, Slide to Left', context,
+              action: false);
         }
       },
     );

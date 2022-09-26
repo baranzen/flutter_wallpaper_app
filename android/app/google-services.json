@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "801539082719",
+    "project_id": "wallpaper-app-4a7d4",
+    "storage_bucket": "wallpaper-app-4a7d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801539082719:android:895ae4c162a8ec72ae1c6a",
+        "android_client_info": {
+          "package_name": "com.baranzengeralp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801539082719-eu9j8benp3kcbujj12ftsdcuhftb0k15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA47mRF-iTTQNHsjkHlG7FACmk0La8WfTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801539082719-eu9j8benp3kcbujj12ftsdcuhftb0k15.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "801539082719-37pg6lgep1umjttcoqvgu293m458hrk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.baranzengeralp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
