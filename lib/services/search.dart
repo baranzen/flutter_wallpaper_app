@@ -11,8 +11,7 @@ Future<List<Wallpapers>> getSearchApi(value) async {
       Uri.parse(
           "https://api.pexels.com/v1/search?query=$value&per_page=80&orientation=portrait"),
       headers: {
-        'Authorization':
-            '563492ad6f91700001000001c7c269d3ea8143c8b04c6202c1c29ef9',
+        'Authorization': '//YOUR API KEY//',
       });
 
   if (result.statusCode == 200) {

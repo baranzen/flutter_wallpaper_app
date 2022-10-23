@@ -1,40 +1,58 @@
-
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="app-icon.png" alt="app-icon" width="100" height="100">
   </a>
-
-  <h1 align="center">Flutter Wallpaper App</h3>
+  <h2 align="center">Flutter Wallpaper App</h3>
   
-
 </div>
+
+[![LinkedIn][play-store]][play-store-url]
+
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 ## Prerequisites
 
-Enter your API in `lib/services/wallpaper_api.dart`
+- Get a free API Key at https://www.pexels.com/api/
+- Enter your [Pexels](https://www.pexels.com/api/) API in
 
-[![Flutter][flutter]][flutter-url]
+1. `lib/services/wallpaper_api.dart`
 
-[![LinkedIn][linkedin-shield]][linkedin-url]
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+   ```dart
+   var result = await http.get(
+       Uri.parse(
+           "https://api.pexels.com/v1/curated?per_page=80&orientation=portrait"),
+       headers: {
+         'Authorization': '//YOUR API KEY//',
+       },
+     );
+   ```
+
+2. `lib/services/search.dart`
+   ```dart
+    var result = await http.get(
+     Uri.parse(
+         "https://api.pexels.com/v1/search?query=$value&per_page=80&orientation=portrait"),
+     headers: {
+       'Authorization': '//YOUR API KEY//',
+     });
+   ```
+
+## Usage
+
+1.  ```sh
+    flutter pub get
+    ```
+
+1.  ```sh
+    flutter run
+    ```
+
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/baranzengeralp/
 [product-screenshot]: images/screenshot.png
 [flutter]: https://img.shields.io/badge/flutter-blue?style=for-the-badge&logo=flutter
 [flutter-url]: https://flutter.dev/
+[play-store]: https://img.shields.io/badge/Play%20store-green?style=for-the-badge&logo=google-play
+[play-store-url]: https://play.google.com/store/apps/details?id=com.baranzengeralp
