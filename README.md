@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="app-icon.png" alt="app-icon" width="100" height="100">
+    <img src="app-icon.png" alt="app-icon" width="150" height="150">
   </a>
   <h2 align="center">Flutter Wallpaper App</h3>
   
@@ -11,6 +11,10 @@
 [![LinkedIn][play-store]][play-store-url]
 
 [![LinkedIn][linkedin-shield]][linkedin-url]
+
+<div align="center">
+    <img src="app-preview.png" height="400">
+</div>
 
 ## Prerequisites
 
@@ -51,7 +55,6 @@
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/baranzengeralp/
-[product-screenshot]: images/screenshot.png
 [flutter]: https://img.shields.io/badge/flutter-blue?style=for-the-badge&logo=flutter
 [flutter-url]: https://flutter.dev/
 [play-store]: https://img.shields.io/badge/Play%20store-green?style=for-the-badge&logo=google-play
