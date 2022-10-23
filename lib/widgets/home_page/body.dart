@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wallpaper_app/services/banner_ad.dart';
-import 'package:wallpaper_app/services/interstitialad.dart';
 import 'package:wallpaper_app/services/search.dart';
 import 'package:wallpaper_app/services/wallpaper_api.dart';
 import 'package:wallpaper_app/widgets/home_page/search_bar.dart';
@@ -19,20 +17,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-//
-  late InterstitialAds interstitialAd;
-
-  late BannerAds headerBanner;
-  late BannerAds footerBanner;
   @override
   void initState() {
-    interstitialAd = InterstitialAds();
-    headerBanner = BannerAds();
-    //! *  interstitialAd.loadInterstitialAd(); */
-    footerBanner = BannerAds();
     getApi();
-    footerBanner.looadStaticBannerAd('ca-app-pub-1426970669505408/7657826411');
-    headerBanner.looadStaticBannerAd('ca-app-pub-1426970669505408/7287835919');
+
     super.initState();
   }
 
@@ -56,15 +44,12 @@ class _BodyState extends State<Body> {
   var chip7 = 'Sports';
   var carClicked = false;
 
-  // ! for ads
-
   @override
   build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         top(context),
-        /*    headerBanner.bannerWidget(), */
         chipWidget(),
         if (value2 != '')
           WallpaperGrid(
@@ -82,7 +67,6 @@ class _BodyState extends State<Body> {
               widget.func2(likedList);
             },
           ),
-        footerBanner.bannerWidget(),
       ],
     );
   }
@@ -168,7 +152,6 @@ class _BodyState extends State<Body> {
       ),
       child: InkWell(
         onTap: () async {
-          interstitialAd.loadInterstitialAd();
           if (carClicked) {
             //! üste alınca çalıştı
             setState(() {
@@ -203,7 +186,6 @@ class _BodyState extends State<Body> {
         borderRadius: const BorderRadius.all(Radius.circular(15.0)),
         child: InkWell(
           onTap: () {
-            interstitialAd.loadInterstitialAd();
             if (!carCheck) {
               setState(() {
                 chip1 = 'Mercedes';
@@ -271,9 +253,7 @@ class _BodyState extends State<Body> {
         padding: const EdgeInsets.only(right: 8),
         child: DropdownButton(
           borderRadius: BorderRadius.circular(8),
-          onTap: (() {
-            interstitialAd.loadInterstitialAd();
-          }),
+          onTap: (() {}),
           focusColor: Colors.teal,
           iconEnabledColor: Colors.teal,
           onChanged: (value2) {

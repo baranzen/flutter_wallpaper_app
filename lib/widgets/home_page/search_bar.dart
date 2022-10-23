@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
-import 'package:wallpaper_app/services/interstitialad.dart';
 
 class SearchBar extends StatefulWidget {
   SearchBar({Key? key, required this.func}) : super(key: key);
@@ -13,34 +12,29 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  late InterstitialAds interstitialAd;
-
-  @override
-  void initState() {
-    interstitialAd = InterstitialAds();
-    super.initState();
-  }
-
   var textEditing = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return SearchBarAnimation(
+        buttonWidget: const Icon(
+          Icons.search,
+          color: Colors.teal,
+        ),
+        secondaryButtonWidget: const Icon(
+          Icons.cancel_rounded,
+          color: Colors.teal,
+        ),
+        trailingWidget: const SizedBox(),
         textEditingController: textEditing,
         isOriginalAnimation: false,
         enableKeyboardFocus: true,
         buttonBorderColour: Colors.teal,
-        trailingIcon: Icons.search,
-        buttonIcon: Icons.search,
-        buttonIconColour: Colors.teal,
-        trailingIconColour: Colors.teal,
         onFieldSubmitted: (String value) {
           debugPrint('onFieldSubmitted value $value');
         },
         hintText: 'search here...',
-        onExpansionComplete: () {
-          interstitialAd.loadInterstitialAd();
-        },
+        onExpansionComplete: () {},
         onCollapseComplete: () {
           textEditing.clear();
           widget.func(value: '');

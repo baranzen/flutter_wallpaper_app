@@ -127,9 +127,9 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               child: TextButton(
                 child: SizedBox(
                   width: 50.w,
-                  child: const Divider(
+                  child: Divider(
                     thickness: 2,
-                    color: Colors.black,
+                    color: Colors.black.withOpacity(0.5),
                   ),
                 ),
                 onPressed: () {

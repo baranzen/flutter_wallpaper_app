@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/pages/liked_page.dart';
-import 'package:wallpaper_app/services/interstitialad.dart';
 import 'package:wallpaper_app/widgets/home_page/body.dart';
 import 'package:wallpaper_app/widgets/home_page/snackbar.dart';
 
@@ -13,14 +12,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<String> likedList = [];
-  late InterstitialAds interstitialAd;
-  @override
-  void initState() {
-    // ignore: todo
-    // TODO: implement initState
-    interstitialAd = InterstitialAds();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +46,6 @@ class _HomePageState extends State<HomePage> {
       ],
       onTap: (index) {
         if (index == 1) {
-          interstitialAd.loadInterstitialAd();
-
           Navigator.push(
             context,
             MaterialPageRoute(

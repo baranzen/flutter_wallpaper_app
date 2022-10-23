@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wallpaper_app/services/set_wallpaper.dart';
 import 'package:wallpaper_app/widgets/second_page/bottom_sheet_widget.dart';
-import 'package:wallpaper_app/widgets/second_page/like_button.dart';
 
 // ignore: must_be_immutable
 class SecondPage extends StatefulWidget {
@@ -68,10 +67,18 @@ class Body extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all<Color>(
               const Color.fromARGB(218, 41, 214, 162).withOpacity(0.5),
             ),
+            shadowColor: MaterialStateProperty.all<Color>(
+              const Color.fromARGB(218, 230, 230, 230).withOpacity(0.5),
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+            ),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
+          child: Padding(
+            padding: EdgeInsets.all(9.0.w),
+            child: const Text(
               'Set Wallpaper',
               style: TextStyle(color: Colors.white, fontSize: 22),
             ),

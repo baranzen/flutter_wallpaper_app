@@ -6,8 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallpaper_app/model/wallpaper.dart';
 import 'package:wallpaper_app/pages/second_page.dart';
-import 'package:wallpaper_app/services/interstitialad.dart';
-import 'package:wallpaper_app/widgets/home_page/grid_banner_ad.dart';
 import 'package:wallpaper_app/widgets/home_page/snackbar.dart';
 import 'package:wallpaper_app/widgets/second_page/bottom_sheet_widget.dart';
 
@@ -23,22 +21,7 @@ class WallpaperGrid extends StatefulWidget {
 
 class _WallpaperGridState extends State<WallpaperGrid> {
   Stream<String>? progressString;
-  late InterstitialAds _interstitialAds;
-  late GridBannerAd gridBannerAd;
-  late InterstitialAds interstitialAds;
-  @override
-  void initState() {
-    interstitialAds = InterstitialAds();
-    gridBannerAd = GridBannerAd();
-    //! kapatıp açtığıda yeni foto ekleyince sıfırlanıyordu bu önemli
-    // ignore: todo
-    // TODO: implement initState
 
-    super.initState();
-  }
-
-  //! burada apiyi çağırmadım çünkü uzun sürecek onun hazır olup bu widget e listenin gelmesi gerekiyor.
-  var adIndex = 1;
   @override
   Widget build(BuildContext context) {
     if (widget.list.isEmpty) {
@@ -94,7 +77,6 @@ class _WallpaperGridState extends State<WallpaperGrid> {
             ],
           ),
           SizedBox(height: 5.h),
-          if (index % 3 == 0) gridBannerAd
         ],
       ),
     );
@@ -126,31 +108,11 @@ class _WallpaperGridState extends State<WallpaperGrid> {
         color: Colors.white,
       ),
     );
-
-    /* DropdownButton(
-      onTap: () => interstitialAds.loadInterstitialAd(),
-      borderRadius: BorderRadius.circular(8),
-      underline: const SizedBox(),
-      icon: const Icon(
-        Icons.more_vert,
-        color: Colors.white,
-      ),
-      onChanged: (value) {
-        sendToLikedList(url);
-      },
-      items: const [
-        DropdownMenuItem(
-          value: 1,
-          child: Text('Like'),
-        ),
-      ],
-    ); */
   }
 
   Widget image(int index) {
     return InkWell(
       onTap: () {
-        interstitialAds.loadInterstitialAd();
         FocusScope.of(context).unfocus(); //! for close keyboard
         Navigator.push(
           context,

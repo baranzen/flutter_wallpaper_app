@@ -21,6 +21,6 @@ Future<List<Wallpapers>> getSearchApi(value) async {
     searchList = jsonList.map((json) => Wallpapers.fromJson(json)).toList();
     return searchList;
   } else {
-    throw Exception('some errors');
+    throw Exception('failed to load data!');
   }
 }
